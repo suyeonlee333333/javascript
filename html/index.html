@@ -7,16 +7,53 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link href="../css/main.css" rel="stylesheet">
 </head>
-
 <body>
-    <nav class="navbar navbar-light bg-light">
+
+    <!-- jQuery 및 Bootstrap 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+
+    <!-- 상단 네비게이션 바 -->
+    <nav class="navbar navbar-light bg-light fixed-top">
+
         <div class="container-fluid">
-            <span class="navbar-brand">Navbar</span>
+            <span class="navbar-brand">JSShop</span>
+            <span class="badge bg-dark">Dark</span>
             <button class="navbar-toggler" type="button">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
         </div>
-    </nav> 
+    </nav>
+
+    <!-- 로그인 버튼 (NAVBAR 밖에 위치) -->
+    <div class="container mt-3 main-boxx">
+        <h2>Shrits on Sale</h2>
+        <button id="login-btn" class="btn btn-danger">로그인</button>
+    </div>
+
+    <!-- 로그인 모달창 -->
+    <div class="black-bg" style="display: none;">
+        <div class="white-bg">
+            <h4>로그인하세요</h4>
+            <form action="success.html">
+                <div class="my-3">
+                    <input type="text" class="form-control" id="email">
+                </div>
+                <div class="my-3">
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <button type="submit" class="btn btn-primary">전송</button>
+            </form>
+            <button class="btn btn-danger" id="close-btn">닫기</button>
+        </div>
+    </div>
+
+    <!-- 알림창 -->
+    <div class="alert alert-danger">
+        <span id="time">5</span>초 이내 구매시 사은품 증정!
+    </div>
+
+    <!-- 상품 리스트 -->
     <ul class="list-group">
         <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
         <li class="list-group-item">A second item</li>
@@ -25,14 +62,136 @@
         <li class="list-group-item">And a fifth one</li>
     </ul>
 
-    <script>
-        document.getElementsByClassName('navbar-toggler') [0].addEventListener('click',
-            function() {
-            document.getElementsByClassName('list-group') [0].classList.toggle('show');
-            })
+    <!-- 슬라이드 이미지 -->
+    <div style="overflow: hidden">
+        <div class="slide-container" style="display: flex; transition: all 0.5s;">
+            <div class="slide-box"><img src="../image/car1-1.png"></div>
+            <div class="slide-box"><img src="../image/car2-1.png"></div>
+            <div class="slide-box"><img src="../image/car3-1.png"></div>
+        </div>
+    </div>
 
-        document.querySelectorAll
+    <!-- 슬라이드 버튼 -->
+    <button class="slide-1">1</button>
+    <button class="slide-2">2</button>
+    <button class="slide-3">3</button>
+    <button class="next">다음</button>
+
+    <div class='lorem'style="width:400px; height: 100px; overflow-y:scroll;">
+        어쩌궁저쩌궁어쩌구져쩌구어쩌구구절씨구어쩌궁저쩌궁어쩌규어쩌궁저쩌궁어쩌구
+        져쩌구어쩌구구절씨구어쩌궁저쩌궁어쩌규어쩌궁저쩌궁어쩌구져쩌구어쩌구구절씨구
+        어쩌궁저쩌궁어쩌규어쩌궁저쩌궁어쩌구져쩌구어쩌구구절씨구어쩌궁저쩌궁어쩌규
+        동의하십니까아아아??
+
+    </div>
+
+    <div style="height:100px;"></div>
+
+    <!-- JavaScript 기능 스크립트 -->
+    <script>
+        // 다크/라이트 토글
+        var count = 0;
+        $('.badge').on('click', function () {
+            count++;
+            if (count % 2 == 1) {
+                $('.badge').html('Light');
+            } else {
+                $('.badge').html('Dark');
+            }
+        });
+
+        // 경고창 타이머 및 자동 숨김
+        var timerCount = 5;
+        setInterval(function () {
+            timerCount -= 1;
+            if (timerCount >= 0) {
+                document.querySelector('#time').innerHTML = timerCount;
+            }
+        }, 1000);
+        setTimeout(function () {
+            $('.alert').hide();
+        }, 5000);
+
+        // 토글 버튼 클릭 시 리스트 보이기/숨기기
+        document.getElementsByClassName('navbar-toggler')[0].addEventListener('click', function () {
+            document.getElementsByClassName('list-group')[0].classList.toggle('show');
+        });
+
+        // 로그인 버튼 및 닫기 버튼 이벤트
+        $('#login-btn').on('click', function () {
+            $('.black-bg').show();
+        });
+        $('#close-btn').on('click', function () {
+            $('.black-bg').hide();
+        });
+
+        // 로그인 유효성 검사
+        $('.btn-primary').on('click', function (e) {
+            var inputEmail = document.querySelector('#email');
+            var inputPassword = document.querySelector('#password');
+
+            // 이메일
+            if (inputEmail.value === "") {
+                alert('이메일을 입력하세요');
+                e.preventDefault();
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail.value)) {
+                alert('이메일 형식이 올바르지 않습니다');
+                e.preventDefault();
+            }
+
+            // 비밀번호
+            if (inputPassword.value === "") {
+                alert('비밀번호를 입력하세요');
+                e.preventDefault();
+            } else if (inputPassword.value.length < 6) {
+                alert('비밀번호는 6자리 이상이어야 합니다');
+                e.preventDefault();
+            } else if (!/[A-Z]/.test(inputPassword.value)) {
+                alert('비밀번호는 대문자를 포함해야 합니다');
+                e.preventDefault();
+            }
+        });
+
+        // 슬라이드 버튼 기능
+        $('.slide-1').on('click', function () {
+            document.querySelector('.slide-container').style.transform = 'translateX(0vw)';
+        });
+        $('.slide-2').on('click', function () {
+            document.querySelector('.slide-container').style.transform = 'translateX(-100vw)';
+        });
+        $('.slide-3').on('click', function () {
+            document.querySelector('.slide-container').style.transform = 'translateX(-200vw)';
+        });
+
+        // 다음 버튼 기능
+        var currentPhoto = 1;
+        $('.next').on('click', function () {
+            if (currentPhoto === 1) {
+                document.querySelector('.slide-container').style.transform = 'translateX(-100vw)';
+                currentPhoto++;
+            } else if (currentPhoto === 2) {
+                document.querySelector('.slide-container').style.transform = 'translateX(-200vw)';
+                currentPhoto++;
+            }
+        });
+
+        $(window).on('scroll', function () {
+            if (window.scrollY > 100) {
+                $('.navbar-brand').css('font-size', '20px');
+            }
+            if (window.scrollY < 100) {
+                $('.navbar-brand').css('font-size', '30px');
+            }
+        });
+        document.querySelector('.lorem').addEventListener('scroll', function() {
+            //div의 스크롤바 내린 양 + 100(눈에 보이는 박스 높이) == div의 실제높이
+            var 스크롤양=document.querySelector('.lorem').scrollTop;
+            var 실제높이=document.querySelector('.lorem').scrollHeight;
+            var 보이는높이=document.querySelector('.lorem').clientHeight;
+            if (스크롤양 + 보이는높이 > 실제높이 - 10) {
+                alert('끝까지 스크롤했습니당');
+            }
+        });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
 </html>
