@@ -25,6 +25,16 @@
         </div>
     </nav>
 
+    <!-- 상품 리스트 -->
+    <ul class="list-group">
+        <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
+        <li class="list-group-item">A second item</li>
+        <li class="list-group-item">A third item</li>
+        <li class="list-group-item">A fourth item</li>
+        <li class="list-group-item">And a fifth one</li>
+    </ul>
+
+
     <!-- 로그인 버튼 (NAVBAR 밖에 위치) -->
     <div class="container mt-3 main-boxx">
         <h2>Shrits on Sale</h2>
@@ -52,15 +62,6 @@
     <div class="alert alert-danger">
         <span id="time">5</span>초 이내 구매시 사은품 증정!
     </div>
-
-    <!-- 상품 리스트 -->
-    <ul class="list-group">
-        <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-        <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li>
-    </ul>
 
     <!-- 슬라이드 이미지 -->
     <div style="overflow: hidden">
@@ -117,12 +118,20 @@
             document.getElementsByClassName('list-group')[0].classList.toggle('show');
         });
 
+
         // 로그인 버튼 및 닫기 버튼 이벤트
         $('#login-btn').on('click', function () {
-            $('.black-bg').show();
+            $('.black-bg').addClass('show-modal');
         });
+
         $('#close-btn').on('click', function () {
-            $('.black-bg').hide();
+            $('.black-bg').removeClass('show-modal');
+        });
+
+        document.querySelector('.black-bg').addEventListener('click', function(e) {
+            if (e.target === document.querySelector('.black-bg')) {
+                document.querySelector('.black-bg').classList.remove('show-modal');
+            }
         });
 
         // 로그인 유효성 검사
@@ -190,6 +199,12 @@
             var 보이는높이=document.querySelector('.lorem').clientHeight;
             if (스크롤양 + 보이는높이 > 실제높이 - 10) {
                 alert('끝까지 스크롤했습니당');
+            }
+        });
+
+        document.querySelector('.black-bg').addEventListener('click', function(e) {
+            if (e.target == document.querySelector('.black-bg')) {
+                document.querySelector('.black-bg').classList.remove('show-modal');
             }
         });
     </script>

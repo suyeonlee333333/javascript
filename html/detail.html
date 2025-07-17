@@ -16,9 +16,9 @@
 
     <div class="container mt-5">
         <ul class="list">
-            <li class="tab-button">Products</li>
-            <li class="tab-button orange">Information</li>
-            <li class="tab-button">Shipping</li>
+            <li class="tab-button" data-id="0">Products</li>
+            <li class="tab-button orange" data-id="1">Information</li>
+            <li class="tab-button" data-id="2">Shipping</li>
         </ul>
         <div class="tab-content">
         <p>상품설명입니다. Product</p>
@@ -31,6 +31,83 @@
         </div>
     </div>
 
+    <div class ="container mt-3">
+        <div class="card p-3">
+            <span class="car-title">상품명</span>
+            <span class="car-price">가격</span>
+        </div>
+    </div>
+
+    <form class="container my-5 form-group">
+        <p>상품선택</p>
+        <select class="form-select mt-2">
+            <option>모자</option>
+            <option class="shirt">셔츠</option>
+            <option>바지</option>
+        </select>
+    </form>
+
+    <form class="container my-5 form-group form-hide">
+        <p>사이즈선택</p>
+        <select class="form-select mt-2">
+            <option>95</option>
+            <option>100</option>
+            <option>105</option>
+        </select>
+    </form>
+
+
+    <div id="test">
+    </div>
+
     <script src="../js/tab.js"></script>
+    <script>
+        var car2 = {name: '소나타',price:[50000, 3000, 4000]};
+        document.querySelector('.car-title').innerHTML = car2['name'];
+        document.querySelector('.car-price').innerHTML = car2['price'][0];
+
+        var pants=[28,30,32];
+
+        $('.form-select').eq(0).on('input', function() {
+            var value= $('.form-select').eq(0).val ();
+            if (value=='셔츠') {
+                $('.form-group').eq(1).removeClass('form-hide');
+            }
+            else if (value=='바지') {
+                $('.form-group').eq(1).removeClass('form-hide');
+                $('.form-select').eq(1).html('');
+                var baji= `<option>28<option>
+                    <option>30<option>`;
+                    $('.form-select').eq(1).append(baji);
+
+                pants.forEach(function(a) {
+                    $('.form-select').eq(1).append(`<option>${a}</option>`);
+                });
+        }});
+
+        var a=document.createElement('p');
+        a.innerHTML= '안녕하세요';
+        document.querySelector('#test').appendChild(a);
+
+        var 템플릿 ='<p>안녕하세요</p>';
+        document.querySelector('#test').insertAdjacentHTML('beforeend',템플릿);
+
+        $('.test').append(템플릿);
+
+        $.get('https://codingapple1.github.io/hello.txt')
+        .done(function(data) {
+            console.log(data);
+        })
+        .fail(function() {
+            console.log('에러발생');
+        });
+
+
+        $.get('https://codingapple1.github.io/price.json')
+        .done(function(data) {
+            console.log(data);
+        })
+
+    </script>
 </body>
 </html>
