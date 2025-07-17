@@ -8,36 +8,17 @@
     <link href="../css/main.css" rel="stylesheet">
 </head>
 <body>
-
-    <!-- jQuery 및 Bootstrap 스크립트 -->
+        <!-- jQuery 및 Bootstrap 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-
-    <div class="card-group container">
-        <div class="card" id="card0">
-            <img src="https://placehold.co/600">
-            <div class="card-body">
-                <h5>Card title</h5>
-                <p>가격 : 70000</p>
-                <button class="btn btn-danger">주문하기</button>
-            </div>
+    
+    
+    <div class="container">
+        <div class="row">
         </div>
-        <div class="card" id="card1">
-            <img src="https://placehold.co/600">
-            <div class="card-body">
-                <h5>Card title</h5>
-                <p>가격 : 70000</p>
-                <button class="btn btn-danger">주문하기</button>
-            </div>
-        </div>
-        <div class="card" id="card2">
-            <img src="https://placehold.co/600">
-            <div class="card-body">
-                <h5>Card title</h5>
-                <p>가격 : 70000</p>
-                <button class="btn btn-danger">주문하기</button>
-            </div>
-        </div>
+    </div>
+    <div class="container">
+        <button class="btn btn-danger" id="more">더보기</button>
     </div>
 
 <script>
@@ -50,17 +31,54 @@
 
     <script src="../js/tab.js"></script>
     <script>
-        function updateCard(id) {
-            var card=document.querySelector('#card' + id);
-            card.querySelector('h5').innerHTML = products[id]['title'];
-            card.querySelector('p').innerHTML = products[id]['price'];
+        products.forEach((a,i) => {
+            var card=
+            `<div class="col-sm-4">
+            <img src="https://placehold.co/600" class="w-100">
+            <h5> ${products[i].title}</h5>
+            <p>가격 :${products[i].price}</p>
+            </div>`;
+            document.querySelector('.row').insertAdjacentHTML('beforeend', card);
+        });
+
+        var clickCount=0;
+        $('#more').click(function() {
+            clickCount++;
+        
+        if (clickCount == 1) {
+            $.get('https://codingapple1.github.io/js/more1.json')
+            .done(function(data) {
+                console.log(data);
+                data.forEach((a,i)=> {
+                    var card=
+                    `<div class="col-sm-4">
+                    <img src="https://placehold.co/600" class="w-100">
+                    <h5> ${data[i].title}</h5>
+                    <p>가격 :${data[i].price}</p>
+                    </div>`;
+                    document.querySelector('.row').insertAdjacentHTML('beforeend', card);
+                    });
+                });
         }
 
-        for (var i = 0; i < products.length; i++) {
-            updateCard(i);
+        
+        else if (clickCount == 2) {
+            $.get('https://codingapple1.github.io/js/more2.json')
+            .done(function(data) {
+                console.log(data);
+                data.forEach((a,i)=> {
+                    var card=
+                    `<div class="col-sm-4">
+                    <img src="https://placehold.co/600" class="w-100">
+                    <h5> ${data[i].title}</h5>
+                    <p>가격 :${data[i].price}</p>
+                    </div>`;
+                    document.querySelector('.row').insertAdjacentHTML('beforeend', card);
+                    });
+                });
         }
-        
-        
+        });
+
     </script>
 </body>
 </html>
