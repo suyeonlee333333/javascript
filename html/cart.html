@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>장바구니페이지
+        <p></p>
+    </div>
+
+    <script>
+        localStorage.setItem('cart', JSON.stringify([]));
+        for (let i = 0; i < cart.length; i++) {
+            cart.forEach(item => {
+        const p = document.createElement('p');
+        p.textContent = item;
+        document.getElementById('cart-list').prepend(p);
+            });
+        }
+    </script>
+</body>
+</html>
